@@ -3,7 +3,7 @@
  * ISBN in Textdatei suchen
  * Algorithmen - Linear Search/Binary Search/Bubble Sort
  * 
- * In der Textdatei dürfen keine leeren Zeilen nach der letzten geschriebenen Zeile vorhanden sein, da sonst versucht wird ein Nullpointer zu dereferenzieren!
+ * In der Textdatei dÃ¼rfen keine leeren Zeilen nach der letzten geschriebenen Zeile vorhanden sein, da sonst versucht wird ein Nullpointer zu dereferenzieren!
  */
 
 #include <stdio.h>
@@ -41,14 +41,14 @@ int main(int argc, char* argv[])
 	Book* inventory;
 	
 
-	//Textdatei öffnen
+	//Textdatei Ã¶ffnen
 	file = fopen("books.txt", "r");
 	if(!file)
 	{
 		printf("Unable to open file!\n");
 	}
 
-	//Zeilen in Textdatei zählen um entsprechend Speicher für das "inventory array" allozieren
+	//Zeilen in Textdatei zÃ¤hlen um entsprechend Speicher fÃ¼r das "inventory array" allozieren
 	while (fgets(line, 9000, file)) count++;
 	fclose(file);
 	file = fopen("books.txt", "r");
@@ -107,7 +107,7 @@ int main(int argc, char* argv[])
 
 //Funktionen
 
-//Zählt Länge der ISBN
+//ZÃ¤hlt LÃ¤nge der ISBN
 int countNumbers(long long ISBN)
 {
 	int count = 0;
@@ -134,7 +134,7 @@ void printAllBooks(Book inventory[], int count)
 	}
 }
 
-// Lineare Suche hat eine Komplexität von 0(n)
+// Lineare Suche hat eine KomplexitÃ¤t von 0(n)
 void linearSearch(Book inventory[], long long ISBN, int count)
 {
 	int numberOfBooks = 0;
@@ -156,7 +156,7 @@ void linearSearch(Book inventory[], long long ISBN, int count)
 	printf("\nAnzahl der Buecher im Lager: %d\n\n", numberOfBooks);
 }
 
-//Binäre Suche hat eine durchschnittliche Komplexität von O(log n) und ist somit schneller als die lineare Suche
+//BinÃ¤re Suche hat eine durchschnittliche KomplexitÃ¤t von O(log n) und ist somit schneller als die lineare Suche
 void binarySearch(Book inventory[], long long ISBN, int count) {
 
 	int pass, exchanged = TRUE, i; 
@@ -166,7 +166,7 @@ void binarySearch(Book inventory[], long long ISBN, int count) {
 	int max = count - 1;
 	int mid;
 
-
+	//Bubble Sort
 	for (pass = 1; pass <= n - 1 && exchanged; pass++)
 	{
 		exchanged = FALSE; 
