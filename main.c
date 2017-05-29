@@ -1,14 +1,15 @@
 /* A&D Implementierung - Semesterprojekt
- * 
- * ISBN in Textdatei suchen
- * Algorithmen - Linear Search/Binary Search/Bubble Sort
- * 
- * In der Textdatei dürfen keine leeren Zeilen nach der letzten geschriebenen Zeile vorhanden sein, da sonst versucht wird ein Nullpointer zu dereferenzieren!
- */
+*
+* ISBN in Textdatei suchen
+* Algorithmen - Linear Search/Binary Search/Bubble Sort
+*
+* In der Textdatei dürfen keine leeren Zeilen nach der letzten geschriebenen Zeile vorhanden sein, da sonst versucht wird ein Nullpointer zu dereferenzieren!
+*/
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
 #pragma warning(disable:4996)
 #define TRUE 1
 #define FALSE 0
@@ -39,11 +40,11 @@ int main(int argc, char* argv[])
 	int search = 0;
 	long long scannedISBN = 0;
 	Book* inventory;
-	
+
 
 	//Textdatei öffnen
 	file = fopen("books.txt", "r");
-	if(!file)
+	if (!file)
 	{
 		printf("Unable to open file!\n");
 	}
@@ -75,9 +76,9 @@ int main(int argc, char* argv[])
 		reccount++;
 	}
 
-	//Einlesen der gesuchten ISBN Nummer
+	//Einlesen der gesuchten ISBN Nummer, ISBN muss größer als kleinste 13-stellige Zahl, kleiner als kleinste 14-stellige Zahl und alphanumerisch sein
 	printf("Gebe eine ISBN Nummer ohne Bindestrich ein (z.B. 978123456791): ");
-	while (scanf_s("%lld",&scannedISBN) && countNumbers(scannedISBN) != 13 && scannedISBN <= 0)
+	while (scanf_s("%lld", &scannedISBN) && scannedISBN > 1000000000000 && scannedISBN < 10000000000000 && !isalnum(scannedISBN))
 	{
 		printf("ISBN hat falsches Format!\n");
 		printf("Gebe eine ISBN Nummer ein: ");
@@ -86,20 +87,21 @@ int main(int argc, char* argv[])
 
 	//Welche Suchmethode?
 	printf("Linear Search(0) o. Binary Search(1): ");
-	while(scanf_s("%d",&search) && search != 0 && search != 1)
+	while (scanf_s("%d", &search) && search != 0 && search != 1)
 	{
 		printf("Falsche Eingabe!\n");
 		printf("Linear Search(0) o. Binary Search(1): ");
 	}
 
-	if(search == 0)
+	if (search == 0)
 	{
 		linearSearch(inventory, scannedISBN, count);
-	}else if(search == 1)
+	}
+	else if (search == 1)
 	{
 		binarySearch(inventory, scannedISBN, count);
 	}
-	
+
 
 	system("PAUSE");
 	return 0;
@@ -159,7 +161,7 @@ void linearSearch(Book inventory[], long long ISBN, int count)
 //Binäre Suche hat eine durchschnittliche Komplexität von O(log n) und ist somit schneller als die lineare Suche
 void binarySearch(Book inventory[], long long ISBN, int count) {
 
-	int pass, exchanged = TRUE, i; 
+	int pass, exchanged = TRUE, i;
 	Book temp;
 	int n = count;
 	int min = 0;
@@ -169,10 +171,10 @@ void binarySearch(Book inventory[], long long ISBN, int count) {
 	//Bubble Sort
 	for (pass = 1; pass <= n - 1 && exchanged; pass++)
 	{
-		exchanged = FALSE; 
+		exchanged = FALSE;
 		for (i = 0; i < n - pass; i++)
-		{                            
-			if (inventory[i].isbn > inventory[i + 1].isbn) 
+		{
+			if (inventory[i].isbn > inventory[i + 1].isbn)
 			{
 				temp = inventory[i];
 				inventory[i] = inventory[i + 1];
@@ -181,14 +183,14 @@ void binarySearch(Book inventory[], long long ISBN, int count) {
 			}
 		}
 	}
-	
+
 	//Binary Search nach der gesuchten ISBN Nummer
 	while (min <= max) {
 		mid = min + (max - min) / 2;
-		if(inventory[mid].isbn < ISBN){
+		if (inventory[mid].isbn < ISBN){
 			min = mid + 1;
 		}
-		else if(inventory[mid].isbn == ISBN){
+		else if (inventory[mid].isbn == ISBN){
 			printf("\n");
 			printf("Author: %s\n", inventory[mid].author);
 			printf("Title: %s\n", inventory[mid].title);
@@ -197,16 +199,17 @@ void binarySearch(Book inventory[], long long ISBN, int count) {
 			printf("Publication year: %d\n", inventory[mid].publicationYear);
 			printf("\n");
 			break;
-		}else
+		}
+		else
 		{
 			max = mid - 1;
 		}
 
 		mid = (min + max) / 2;
 	}
-	if(min > max)
+	if (min > max)
 	{
 		printf("\n");
-		printf("ISBN %lld not found!\n",ISBN);
+		printf("ISBN %lld not found!\n", ISBN);
 	}
 }
