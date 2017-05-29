@@ -26,7 +26,6 @@ typedef struct
 
 // Function prototypes
 void printAllBooks(Book inventory[], int count);
-int countNumbers(long long ISBN);
 void linearSearch(Book inventory[], long long ISBN, int count);
 void binarySearch(Book inventory[], long long ISBN, int count);
 
@@ -108,18 +107,6 @@ int main(int argc, char* argv[])
 }
 
 //Funktionen
-
-//Zählt Länge der ISBN
-int countNumbers(long long ISBN)
-{
-	int count = 0;
-	while (ISBN != 0)
-	{
-		ISBN /= 10;
-		++count;
-	}
-	return count;
-}
 
 //Druckt alle "Book structs" des "inventory arrays" aus
 void printAllBooks(Book inventory[], int count)
